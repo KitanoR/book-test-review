@@ -19,7 +19,7 @@ source ~/.zshrc
 
 ### Project
 - Create an .env file. in `book-web/.env` 
-- Add the value: `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` this will connect the NextAPP with the backend, it can be any url, but the example provider here is the default one.
+- Add the value: `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` and `SERVER_API_URL=http://127.0.0.1:8000` this will connect the NextAPP with the backend, it can be any url, but the example provider here is the default one.
 - run `yarn install`
 - run `yarn dev` here you should be able to see the front app running in the port :3000
 
