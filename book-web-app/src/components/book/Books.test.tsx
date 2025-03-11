@@ -2,6 +2,13 @@ import { screen } from "@testing-library/react";
 import { render } from "../../test-utils/render";
 
 import Book from "./Books";
+import userEvent from "@testing-library/user-event";
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ data: 'mocked data' }),
+  })
+);
 
 const initialData = [
   {
@@ -36,5 +43,13 @@ describe("Books component", () => {
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByRole('row', { name: 'title book Caye edited 2020 draft'})).toBeInTheDocument();
     expect(screen.getByRole('row', { name: 'Modern Software Engineering David Farley 2019 draft' })).toBeInTheDocument();
+  });
+
+  it('should filter books by author name', async () => {
+    render(<Book initialData={initialData} />);
+
+    await userEvent.type(screen.getByRole('textbox'), 'Caye edited');
+
+    expect(screen.getByRole('row', { name: 'title book Caye edited 2020 draft'})).toBeInTheDocument();
   });
 });
