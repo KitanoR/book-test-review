@@ -32,8 +32,8 @@ const BookActions = ({ title, bookId, refreshBooks }: BookActionsProps) => {
     };
 
   return (
-    <DialogRoot placement="top" open={open} onOpenChange={(e) => setOpen(e.open)}>
-      <Link href={`/book/${bookId}`}>
+    <DialogRoot placement="top" open={open} onOpenChange={(e: { open: boolean | ((prevState: boolean) => boolean); }) => setOpen(e.open)}>
+      <Link href={`/book/${bookId}`} >
         <IconButton size="sm" color="blue" mr={2} variant="ghost">
           <LuPencil />
         </IconButton>

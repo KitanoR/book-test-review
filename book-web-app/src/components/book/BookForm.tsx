@@ -77,7 +77,7 @@ const BookForm = ({
     loadAuthors();
   }, []);
 
-  const onSubmit: SubmitHandler<BookInputs> = async (data) => {
+  const onSubmit: SubmitHandler<BookInputs> = async (data: BookInputs) => {
     setLoading(true);
     try {
       const authorId = !selectedAuthor?.__isNew__
