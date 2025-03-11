@@ -5,11 +5,11 @@ FROM node:18.18.0
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY book-web/package.json book-web/yarn.lock ./
+COPY book-web-app/package.json book-web-app/yarn.lock ./
 RUN yarn install
 
 # Copy the rest of the application files
-COPY book-web ./
+COPY book-web-app ./
 
 # Build the Next.js app
 # RUN yarn build
