@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:test123@db:5432/BookDB"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    container_name: nextjs_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: "http://127.0.0.1:8000"
+
+  db:
+    image: postgres:14.4
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: test123
+      POSTGRES_DB: BookDB
+      POSTGRES_USER: postgres
+    container_name: BookDB
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
