@@ -39,7 +39,7 @@ const BookActions = ({ title, bookId, refreshBooks }: BookActionsProps) => {
         </IconButton>
       </Link>
       <DialogTrigger asChild>
-        <IconButton size="sm" color="red" variant="ghost">
+        <IconButton data-testid="delete-button" size="sm" color="red" variant="ghost">
           <LuCookingPot />
         </IconButton>
       </DialogTrigger>

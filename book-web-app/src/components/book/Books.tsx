@@ -24,7 +24,6 @@ const Books = ({ initialData }: BooksProps) => {
     const books = await getBooks();
     setBooks(books);
   }
-
   return (
     <>
       <Search onChange={handleSearch} />

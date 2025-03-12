@@ -32,8 +32,7 @@ const DialogDelete = ({ title, onDelete, loading }: DialogDeleteProps) => {
           </DialogHeader>
           <DialogBody>
             <Text>
-              This action cannot be undone. This will permanently delete the
-              book {title} from the database.
+              This action cannot be undone. This will permanently delete the book {title} from the database.
             </Text>
           </DialogBody>
           <DialogFooter>

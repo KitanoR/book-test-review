@@ -58,3 +58,41 @@ def test_create_book(test_books):
     assert response.json()["author"]["name"] == "Author1"
     assert response.json()["year"] == 2021
     assert response.json()["status"] == "draft"
+
+def test_create_book_with_edited_author(test_books):
+    response = client.post("/books/", json={"title": "Book1", "author_id": 1, "author_name": "Author1",  "year": 2021})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+
+    response = client.get("/books/1")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+    assert response.json()["author"]["name"] == "Author1"
+
+    response = client.post("/books/", json={"title": "New Book 2", "author_id": 1, "author_name": "Author1 edited",  "year": 2021})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "New Book 2"
+
+    response = client.get("/books/1")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+    assert response.json()["author"]["name"] == "Author1 edited"
+
+def test_create_book_with_existing_author(test_books):
+    response = client.post("/books/", json={"title": "Book1", "author_id": 1, "author_name": "Author1",  "year": 2021})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+
+    response = client.get("/books/1")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+    assert response.json()["author"]["name"] == "Author1"
+
+    response = client.post("/books/", json={"title": "New Book 2", "author_id": 1,  "author_name": "Author1", "year": 2021})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "New Book 2"
+
+    response = client.get("/books/1")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["title"] == "Book1"
+    assert response.json()["author"]["name"] == "Author1"

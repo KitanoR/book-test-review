@@ -6,11 +6,13 @@ from dotenv import load_dotenv
 import os
 
 # Load .env file
-load_dotenv()
+dotenv_path = os.path.abspath(".env.test")
+
+ENV_FILE = dotenv_path if os.getenv("TEST_ENV") == "true" else ".env"
+load_dotenv(ENV_FILE, override=True)
 
 # Access environment variables
 DB_URL = os.getenv("DATABASE_URL")
-
 SQLALCHEMY_DATABASE_URL = DB_URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

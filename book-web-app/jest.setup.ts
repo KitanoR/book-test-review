@@ -1,13 +1,11 @@
 import "@testing-library/jest-dom";
-// import { cache } from "@chakra-ui/react";
-// import { createSerializer } from "@emotion/jest";
-
-// Chakra UI fix for tests
-// expect.addSnapshotSerializer(createSerializer(cache));
 
 // Polyfill for structuredClone if needed
 if (!global.structuredClone) {
-  global.structuredClone = (obj) => JSON.parse(JSON.stringify(obj));
+  global.structuredClone = (obj) => {
+    if (obj === undefined) return undefined;
+    return JSON.parse(JSON.stringify(obj));
+  };
 }
 
 if (!window.matchMedia) {
@@ -22,3 +20,9 @@ if (!window.matchMedia) {
     dispatchEvent: jest.fn(),
   }));
 }
+
+Object.defineProperty(window, "scrollTo", { value: jest.fn(), writable: true });
+Object.defineProperty(HTMLElement.prototype, "scrollTo", {
+  value: jest.fn(),
+  writable: true,
+});

@@ -70,7 +70,10 @@ export const createBook = async (book: BookRequest) => {
     },
     body: JSON.stringify(book),
   });
-  return response;
+  if (response.status !== 200) {
+    throw new Error("Error creating book");
+  }
+  return response.json();
 };
 
 export const updateBook = async (bookId: number, book: BookRequest) => {
@@ -81,12 +84,16 @@ export const updateBook = async (bookId: number, book: BookRequest) => {
     },
     body: JSON.stringify(book),
   });
-  return response;
+  if (response.status !== 200) {
+    throw new Error("Error editing book");
+  }
+  return response.json();
 };
 
 export const deleteBook = async (bookId: number) => {
   const response = await fetch(`${host}/books/${bookId}`, {
     method: "DELETE",
   });
-  return response;
+
+  return response.json();
 };

@@ -188,7 +188,7 @@ const BookForm = ({
 
           {selectedAuthor && !selectedAuthor.__isNew__ && !editAuthorName ? (
             <Button size="sm" variant="outline" onClick={handleEditAuthor}>
-              {editAuthorName ? "Cancel" : "Edit author"}
+              Edit author
             </Button>
           ) : null}
         </Field.Root>

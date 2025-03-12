@@ -19,12 +19,22 @@ source ~/.zshrc
 
 ### Project
 - Create an .env file. in `book-web/.env` 
-- Add the value: `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` and `SERVER_API_URL=http://127.0.0.1:8000` this will connect the NextAPP with the backend, it can be any url, but the example provider here is the default one.
+- Add the value: `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` and `SERVER_API_URL=http://127.0.0.1:8000` 
 - run `yarn install`
 - run `yarn dev` here you should be able to see the front app running in the port :3000
 
+### Unit test
+All the components related to the test they have unit test. I didn't add tests for `book-web-app/src/components/ui` because they are components created by 
+Chakra UI CLI so since they come from a package I decided to omit the tests. 
 
-### Backend 
+I used React testing library and Jest
+
+To run the unit tests
+- Go to the path `book-web-app`
+- run `nvm use` 
+- run `yarn test`
+
+## Backend 
 - Create a local Posgress data base
 - create a .env file.`bookApi/.env`
 - add the value for `DATABASE_URL = 'DB connection url'`
@@ -39,6 +49,16 @@ WHen the database is ready we can check this:
 - `pip install -r bookApi/requirements.txt`
 - run the app `uvicorn bookApi.main:app --reload`
 
+# Run app using docker
+- run the command `docker-compose up --build` this will create the docker images for the app and will expose the frontend and backed endpoints. 
+- to validate the frontend you just go to http://localhost:3000
+
+### unit tests
+- please be sure you are in bookApi folder
+- check that the you activated the virtual env
+- create a .env.test file
+- add the following in the file `DATABASE_URL="sqlite:///test.db"` this will use the connection for the local db in test env
+- run this `TEST_ENV=true pytest` (The flag will allow us to use the .env.test file)
 
 Any question reach Cayetano Rosales. 
 
