@@ -50,9 +50,6 @@ WHen the database is ready we can check this:
 - `pip install -r bookApi/requirements.txt`
 - run the app `uvicorn bookApi.main:app --reload`
 
-# Run app using docker
-- run the command `docker-compose up --build` this will create the docker images for the app and will expose the frontend and backed endpoints. 
-- to validate the frontend you just go to http://localhost:3000
 
 ### unit tests
 - please be sure you are in bookApi folder
@@ -61,5 +58,10 @@ WHen the database is ready we can check this:
 - add the following in the file `DATABASE_URL="sqlite:///test.db"` this will use the connection for the local db in test env
 - run this `TEST_ENV=true pytest` (The flag will allow us to use the .env.test file)
 
-Any question reach Cayetano Rosales. 
 
+
+# Run app using docker
+- run the command `docker-compose up --build` this will create the docker images for the app and will expose the frontend and backed endpoints. 
+- to validate the frontend you just go to http://localhost:3000
+
+Any question reach Cayetano Rosales. 
