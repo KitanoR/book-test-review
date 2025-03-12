@@ -34,6 +34,7 @@ To run the unit tests
 - run `nvm use` 
 - run `yarn test`
 
+
 ## Backend 
 - Create a local Posgress data base
 - create a .env file.`bookApi/.env`

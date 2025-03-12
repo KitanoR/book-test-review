@@ -27,11 +27,13 @@ import { useRouter } from "next/navigation";
 import { toaster } from "../ui/toaster";
 
 export interface BookInputs {
+  id?: number;
   title: string;
   author: SelectOption;
   year: number;
   status: string[];
   author_name?: string;
+  author_id?: number;
 }
 
 export interface SelectOption {
@@ -60,8 +62,8 @@ const BookForm = ({
   const [authors, setAuthors] = useState<SelectOption[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [editAuthorName, setEditAuthorName] = useState<boolean>(false);
-  const { handleSubmit, control, watch } = useForm<BookInputs>({
-    defaultValues: initialValues,
+  const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm<BookInputs>({
+    defaultValues: initialValues
   });
   const selectedAuthor = watch("author");
   const statusCollection = createListCollection({ items: status });
@@ -115,38 +117,44 @@ const BookForm = ({
 
   const handleEditAuthor = () => {
     setEditAuthorName(!editAuthorName);
+    setValue("author_name", selectedAuthor?.label);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
-        <Field.Root orientation="horizontal">
+        <Field.Root orientation="vertical" invalid={!!errors.title}>
           <Field.Label>Title</Field.Label>
           <Controller
             name="title"
             control={control}
+            rules={{ required: "Title is required" }}
             render={({ field }) => (
-              <Input {...field} placeholder="Book title" />
+              <Input {...field} value={field.value ?? ""} placeholder="Book title" />
             )}
           />
+          <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
         </Field.Root>
 
-        <Field.Root orientation="horizontal">
+        <Field.Root orientation="vertical" invalid={!!errors.year}>
           <Field.Label>Year</Field.Label>
           <Controller
             name="year"
             control={control}
+            rules={{ required: "Year is required" }}
             render={({ field }) => (
-              <Input {...field} placeholder="Year (2020)" />
+              <Input {...field} value={field.value ?? ""} placeholder="Year (2020)" />
             )}
           />
+          <Field.ErrorText>{errors.year?.message}</Field.ErrorText>
         </Field.Root>
 
-        <Field.Root orientation="horizontal">
+        <Field.Root orientation="vertical" invalid={!!errors.status}>
           <Field.Label>Status</Field.Label>
           <Controller
             name="status"
             control={control}
+            rules={{ required: "Status is required" }}
             render={({ field }) => (
               <SelectRoot
                 name={field.name}
@@ -168,17 +176,19 @@ const BookForm = ({
               </SelectRoot>
             )}
           />
+          <Field.ErrorText>{errors.status?.message}</Field.ErrorText>
         </Field.Root>
 
-        <Field.Root orientation="horizontal">
+        <Field.Root orientation="vertical" invalid={!!errors.author}>
           <Field.Label>Author</Field.Label>
           <Controller
             name="author"
             control={control}
+            rules={{ required: "Author is required" }}
             render={({ field }) => (
               <CreatableSelect
                 options={authors}
-                defaultValue={initialValues?.author}
+                value={field.value ?? null}
                 placeholder="Select or create author"
                 onChange={(value) => field.onChange(value)}
                 disabled={editAuthorName}
@@ -191,17 +201,18 @@ const BookForm = ({
               Edit author
             </Button>
           ) : null}
+          <Field.ErrorText>{errors.author?.message}</Field.ErrorText>
         </Field.Root>
         {editAuthorName ? (
-          <Field.Root orientation="horizontal">
+          <Field.Root orientation="vertical" invalid={!!errors.author_name}>
             <Field.Label>New Author Name</Field.Label>
             <Controller
               name="author_name"
               control={control}
+              rules={{ required: "Author name is required" }}
               render={({ field }) => (
                 <Input
-                  {...field}
-                  defaultValue={selectedAuthor.label}
+                {...field}
                   placeholder="Edit author name"
                 />
               )}
@@ -209,6 +220,7 @@ const BookForm = ({
             <Button size="sm" variant="outline" onClick={handleEditAuthor}>
               Cancel
             </Button>
+            <Field.ErrorText>{errors.author_name?.message}</Field.ErrorText>
           </Field.Root>
         ) : null}
         <Flex justifyContent="center" mt={6}>

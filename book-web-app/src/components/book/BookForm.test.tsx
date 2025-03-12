@@ -14,13 +14,12 @@ jest.mock("next/navigation");
 const server = setupServer(...bookHandlers());
 
 const initalValues: BookInputs = {
-  title: "Modern Software Engineering",
+  id: 2,
+  title: 'Modern Software Engineering',
+  author_id: 1,
   year: 2019,
-  status: ["draft"],
-  author: {
-    value: 1,
-    label: "David Farley",
-  },
+  status: [ 'draft' ],
+  author: { value: 1, label: 'David Farley' }
 }
 
 describe("BookForm", () => {
@@ -192,7 +191,6 @@ describe("BookForm", () => {
         expect(pushMock).toHaveBeenCalledWith('/book/home');
       });
     });
-
 
     it('should display error toast when there is an error creating book', async () => {
       render(
